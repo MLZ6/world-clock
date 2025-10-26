@@ -2,19 +2,19 @@
 function updateTime() {
 
 let sydneyElement = document.querySelector("#sydney");
+if (sydneyElement) {
 let sydneyDateElement = sydneyElement.querySelector(".date");
 let sydneyTimeElement = sydneyElement.querySelector(".time");
 let sydneyTime = moment().tz("Australia/Sydney");
 
 sydneyDateElement.innerHTML = sydneyTime.format("MMMM Do YYYY");
 sydneyTimeElement.innerHTML = sydneyTime.format("h:mm:ss [<small>]A[</small>]");
-
+}
  
-  
 //Gaborone
 
-
 let gaboroneElement = document.querySelector("#gaborone");
+if (gaboroneElement) {
 let gaboroneDateElement = gaboroneElement.querySelector(".date");
 let gaboroneTimeElement = gaboroneElement.querySelector(".time");
 let gaboroneTime = moment().tz("Africa/Gaborone");
@@ -23,5 +23,38 @@ gaboroneDateElement.innerHTML = gaboroneTime.format("MMMM Do YYYY");
 gaboroneTimeElement.innerHTML = gaboroneTime.format("h:mm:ss [<small>]A[</small>]");
 }
 
+//Honolulu
+
+let honoluluElement = document.querySelector("#honolulu");
+if (honoluluElement) {
+let honoluluDateElement = honoluluElement.querySelector(".date");
+let honoluluTimeElement = honoluluElement.querySelector(".time");
+let honoluluTime = moment().tz("Pacific/Honolulu");
+
+honoluluDateElement.innerHTML = honoluluTime.format("MMMM Do YYYY");
+honoluluTimeElement.innerHTML = honoluluTime.format("h:mm:ss [<small>]A[</small>]");}
+}
+function updateCity(event) {
+
+  let cityTimeZone = event.target.value; 
+  let cityName = cityTimeZone.replace("_", " ").split("/")[1];
+  let cityTime = moment().tz(cityTimeZone);
+  let citiesElement = document.querySelector("#cities");
+  citiesElement.innerHTML =`
+  <div class="city">
+  <div>
+  <h2>${cityName}</h2>
+  <div class="date">${cityTime.format("MMMM Do YYYY")}</div>
+  </div>
+  <div class="time">${cityTime.format("h:mm:ss")}<small>${cityTime.format("A")} </small></div>
+  </div>
+  `;
+
+}
+
 updateTime();
 setInterval(updateTime, 1000);
+
+let citiesSelectElement = document.querySelector("#city");
+
+citiesSelectElement.addEventListener("change", updateCity);
